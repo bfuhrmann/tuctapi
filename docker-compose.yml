@@ -1,0 +1,39 @@
+services:
+
+  mysql:
+    image: mysql:8.4
+    container_name: tuctapi-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: tuctapi
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - tuctapi-network
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: tuctapi-api
+    restart: unless-stopped
+    environment:
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_NAME: tuctapi
+      DB_USER: root
+      DB_PASSWORD: ${DB_PASSWORD}
+    depends_on:
+      - mysql
+    ports:
+      - "127.0.0.1:8080:8080"
+    networks:
+      - tuctapi-network
+
+volumes:
+  mysql_data:
+
+networks:
+  tuctapi-network:
+    driver: bridge
