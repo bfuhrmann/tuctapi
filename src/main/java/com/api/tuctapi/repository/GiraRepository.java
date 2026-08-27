@@ -8,6 +8,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public  interface GiraRepository  extends JpaRepository<Gira, Integer> {
+    List<Gira> findByIsPublicTrue();
+
+    List<Gira> findByIsPublicTrueAndDateGiraBetween(
+            LocalDateTime inicio,
+            LocalDateTime fim
+    );
+
     List<Gira> findByDateGiraBetween(
             LocalDateTime start,
             LocalDateTime end

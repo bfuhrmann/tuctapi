@@ -3,6 +3,7 @@
     application:
       name: tuctapi
 
+
     datasource:
       url: jdbc:mysql://localhost:3306/tuctapi?useSSL=false&serverTimezone=America/Sao_Paulo&allowPublicKeyRetrieval=true
       username: root

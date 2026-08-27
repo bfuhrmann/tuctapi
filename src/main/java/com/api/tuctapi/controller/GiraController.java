@@ -5,6 +5,9 @@ import com.api.tuctapi.dto.GiraResponse;
 import com.api.tuctapi.response.ApiResponse;
 import com.api.tuctapi.service.GiraService;
 import com.api.tuctapi.response.PaginacaoResponse;
+import com.api.tuctapi.validation.NotEmptyList;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import org.springframework.validation.annotation.Validated;
 
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -12,9 +15,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.PathVariable;
-
 import java.util.List;
 
+
+@Validated
 @RestController
 @RequestMapping("/api/v1/giras")
 public class GiraController {
@@ -43,6 +47,30 @@ public class GiraController {
                 .body(apiResponse);
     }
 
+
+    @PostMapping("/lote")
+    @SecurityRequirement(name = "bearerAuth")
+    public ResponseEntity<ApiResponse<List<GiraResponse>>> criarEmLote(
+            @Valid
+            @NotEmptyList
+            @RequestBody List<@Valid GiraRequest> requests) {
+
+        List<GiraResponse> response =
+                giraService.criarEmLote(requests);
+
+        ApiResponse<List<GiraResponse>> apiResponse =
+                new ApiResponse<>(
+                        true,
+                        HttpStatus.CREATED.value(),
+                        "Giras criadas com sucesso",
+                        response
+                );
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(apiResponse);
+    }
+
     @GetMapping
     public ResponseEntity<ApiResponse<PaginacaoResponse<GiraResponse>>> listar(
             Pageable pageable) {
@@ -55,6 +83,58 @@ public class GiraController {
                         true,
                         HttpStatus.OK.value(),
                         "Giras encontradas com sucesso",
+                        response
+                );
+
+        return ResponseEntity.ok(apiResponse);
+    }
+
+    @GetMapping("/publicas")
+    public ResponseEntity<ApiResponse<List<GiraResponse>>> listarGirasPublicas() {
+
+        List<GiraResponse> response =
+                giraService.listarGirasPublicas();
+
+        ApiResponse<List<GiraResponse>> apiResponse =
+                new ApiResponse<>(
+                        true,
+                        HttpStatus.OK.value(),
+                        "Giras públicas encontradas",
+                        response
+                );
+
+        return ResponseEntity.ok(apiResponse);
+    }
+
+    @GetMapping("/publicas/mes-atual")
+    public ResponseEntity<ApiResponse<List<GiraResponse>>> listarGirasPublicasMesAtual() {
+
+        List<GiraResponse> response =
+                giraService.listarGirasPublicasMesAtual();
+
+        ApiResponse<List<GiraResponse>> apiResponse =
+                new ApiResponse<>(
+                        true,
+                        HttpStatus.OK.value(),
+                        "Giras públicas do mês atual encontradas com sucesso",
+                        response
+                );
+
+        return ResponseEntity.ok(apiResponse);
+    }
+
+    @GetMapping("/publicas/mes/{mes}")
+    public ResponseEntity<ApiResponse<List<GiraResponse>>> listarGirasPublicasPorMes(
+            @PathVariable Integer mes) {
+
+        List<GiraResponse> response =
+                giraService.listarGirasPublicasPorMes(mes);
+
+        ApiResponse<List<GiraResponse>> apiResponse =
+                new ApiResponse<>(
+                        true,
+                        HttpStatus.OK.value(),
+                        "Giras públicas do mês encontradas com sucesso",
                         response
                 );
 
@@ -87,6 +167,24 @@ public class GiraController {
                         true,
                         HttpStatus.OK.value(),
                         "Giras do mês atual encontradas com sucesso",
+                        response
+                );
+
+        return ResponseEntity.ok(apiResponse);
+    }
+
+    @GetMapping("/mes/{mes}")
+    public ResponseEntity<ApiResponse<List<GiraResponse>>> listarPorMes(
+            @PathVariable Integer mes) {
+
+        List<GiraResponse> response =
+                giraService.listarPorMes(mes);
+
+        ApiResponse<List<GiraResponse>> apiResponse =
+                new ApiResponse<>(
+                        true,
+                        HttpStatus.OK.value(),
+                        "Giras do mês encontradas com sucesso",
                         response
                 );
 
