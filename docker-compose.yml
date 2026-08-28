@@ -6,7 +6,7 @@ services:
     restart: unless-stopped
     environment:
       MYSQL_DATABASE: tuctapi
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     volumes:
       - mysql_data:/var/lib/mysql
     networks:
@@ -22,7 +22,7 @@ services:
       DB_HOST: mysql
       DB_PORT: 3306
       DB_NAME: tuctapi
-      DB_USER: root
+      DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
     depends_on:
       - mysql
