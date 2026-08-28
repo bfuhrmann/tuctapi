@@ -17,17 +17,38 @@ jobs:
           port: 22022
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
+
           script: |
+            set -e
+
             cd /opt/apps/tuctapi
 
+            echo "================================="
             echo "Atualizando código..."
+            echo "================================="
+
             git pull origin main
 
-            echo "Recriando imagem..."
-            docker compose build
+            echo "================================="
+            echo "Construindo nova imagem..."
+            echo "================================="
 
+            docker compose build --no-cache api
+
+            echo "================================="
             echo "Subindo nova versão..."
+            echo "================================="
+
             docker compose up -d
 
-            echo "Status dos containers:"
+            echo "================================="
+            echo "Status dos containers"
+            echo "================================="
+
             docker compose ps
+
+            echo "================================="
+            echo "Últimos logs da API"
+            echo "================================="
+
+            docker compose logs --tail=30 api

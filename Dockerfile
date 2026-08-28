@@ -1,4 +1,7 @@
-FROM eclipse-temurin:21-jdk-jammy
+# =========================
+# Etapa 1 - Build
+# =========================
+FROM eclipse-temurin:21-jdk-jammy AS build
 
 WORKDIR /app
 
@@ -14,6 +17,16 @@ COPY src src
 
 RUN ./mvnw clean package -DskipTests
 
+
+# =========================
+# Etapa 2 - Runtime
+# =========================
+FROM eclipse-temurin:21-jre-jammy
+
+WORKDIR /app
+
+COPY --from=build /app/target/*.jar app.jar
+
 EXPOSE 8080
 
-ENTRYPOINT ["java", "-jar", "target/tuctapi-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
