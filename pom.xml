@@ -14,11 +14,12 @@
 
     <groupId>com.api</groupId>
     <artifactId>tuctapi</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-
+    <version>0.0.2</version>
     <name>tuctapi</name>
     <description>API REST profissional com Spring Boot e MySQL</description>
-
+    <organization>
+        <name>TUCT</name>
+    </organization>
     <properties>
         <java.version>21</java.version>
     </properties>
