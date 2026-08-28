@@ -76,6 +76,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiResponse<Void>> handleGenericException(
             Exception exception) {
 
+
         ApiResponse<Void> response = new ApiResponse<>(
                 false,
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
