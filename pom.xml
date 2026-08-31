@@ -14,7 +14,7 @@
 
     <groupId>com.api</groupId>
     <artifactId>tuctapi</artifactId>
-    <version>0.0.4</version>
+    <version>0.0.5</version>
     <name>tuctapi</name>
     <description>API REST com Spring Boot e MySQL</description>
     <organization>
