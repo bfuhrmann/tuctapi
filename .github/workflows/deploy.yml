@@ -24,31 +24,33 @@ jobs:
             cd /opt/apps/tuctapi
 
             echo "================================="
-            echo "Atualizando código..."
+            echo "🔄 Atualizando código..."
             echo "================================="
 
-            git pull origin main
+            # Força o estado exato do GitHub, descartando mudanças locais
+            git fetch --all
+            git reset --hard origin/main
 
             echo "================================="
-            echo "Construindo nova imagem..."
+            echo "🐳 Construindo nova imagem..."
             echo "================================="
 
             docker compose build --no-cache api
 
             echo "================================="
-            echo "Subindo nova versão..."
+            echo "🚀 Subindo nova versão..."
             echo "================================="
 
             docker compose up -d
 
             echo "================================="
-            echo "Status dos containers"
+            echo "📊 Status dos containers"
             echo "================================="
 
             docker compose ps
 
             echo "================================="
-            echo "Últimos logs da API"
+            echo "📋 Últimos logs da API"
             echo "================================="
 
             docker compose logs --tail=30 api
