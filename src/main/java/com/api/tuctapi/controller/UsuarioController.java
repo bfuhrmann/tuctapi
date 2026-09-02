@@ -4,6 +4,7 @@ import com.api.tuctapi.dto.UsuarioRequest;
 import com.api.tuctapi.dto.UsuarioResponse;
 import com.api.tuctapi.response.ApiResponse;
 import com.api.tuctapi.service.UsuarioService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ public class UsuarioController {
     }
 
     @PostMapping
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<ApiResponse<UsuarioResponse>> criar(
             @Valid @RequestBody UsuarioRequest request) {
 

@@ -32,6 +32,7 @@ public class GiraController {
     }
 
     @PostMapping
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<ApiResponse<GiraResponse>> criar(
             @Valid @RequestBody GiraRequest request) {
 
