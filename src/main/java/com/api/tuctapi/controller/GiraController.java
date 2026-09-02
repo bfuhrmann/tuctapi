@@ -74,6 +74,7 @@ public class GiraController {
     }
 
     @GetMapping
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<ApiResponse<PaginacaoResponse<GiraResponse>>> listar(
             @ParameterObject
             @PageableDefault(size = 10)
