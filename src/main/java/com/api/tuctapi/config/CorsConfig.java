@@ -2,46 +2,52 @@ package com.api.tuctapi.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.List;
 
 @Configuration
 public class CorsConfig {
 
     @Bean
-    public WebMvcConfigurer corsConfigurer() {
+    public CorsConfigurationSource corsConfigurationSource() {
 
-        return new WebMvcConfigurer() {
+        CorsConfiguration configuration = new CorsConfiguration();
 
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
+        configuration.setAllowedOriginPatterns(List.of("*"));
 
-                registry.addMapping("/**")
-                        .allowedOrigins(
-                                "http://localhost:4200",
-                                "http://localhost:3000"
-                        )
-                        .allowedMethods(
-                                "GET",
-                                "POST",
-                                "PUT",
-                                "DELETE",
-                                "OPTIONS"
-                        )
-                        .allowedHeaders(
-                                "Origin",
-                                "Content-Type",
-                                "Accept",
-                                "Authorization",
-                                "X-Requested-With"
-                        )
-                        .exposedHeaders(
-                                "X-API-Version",
-                                "X-Total-Count"
-                        )
-                        .allowCredentials(true)
-                        .maxAge(3600);
-            }
-        };
+        configuration.setAllowedMethods(List.of(
+                "GET",
+                "POST",
+                "PUT",
+                "DELETE",
+                "OPTIONS"
+        ));
+
+        configuration.setAllowedHeaders(List.of(
+                "Origin",
+                "Content-Type",
+                "Accept",
+                "Authorization",
+                "X-Requested-With"
+        ));
+
+        configuration.setExposedHeaders(List.of(
+                "X-API-Version",
+                "X-Total-Count"
+        ));
+
+        configuration.setAllowCredentials(true);
+
+        configuration.setMaxAge(3600L);
+
+        UrlBasedCorsConfigurationSource source =
+                new UrlBasedCorsConfigurationSource();
+
+        source.registerCorsConfiguration("/**", configuration);
+
+        return source;
     }
 }
