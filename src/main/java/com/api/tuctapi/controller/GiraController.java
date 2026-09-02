@@ -14,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
 
@@ -72,8 +74,9 @@ public class GiraController {
     }
 
     @GetMapping
-    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<ApiResponse<PaginacaoResponse<GiraResponse>>> listar(
+            @ParameterObject
+            @PageableDefault(size = 10)
             Pageable pageable) {
 
         PaginacaoResponse<GiraResponse> response =
