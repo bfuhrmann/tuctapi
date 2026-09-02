@@ -72,6 +72,7 @@ public class GiraController {
     }
 
     @GetMapping
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<ApiResponse<PaginacaoResponse<GiraResponse>>> listar(
             Pageable pageable) {
 
@@ -142,6 +143,7 @@ public class GiraController {
     }
 
     @GetMapping("/{id}")
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<ApiResponse<GiraResponse>> buscarPorId(
             @PathVariable Integer id) {
 
@@ -158,6 +160,7 @@ public class GiraController {
     }
 
     @GetMapping("/mes-atual")
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<ApiResponse<List<GiraResponse>>> listarMesAtual() {
 
         List<GiraResponse> response = giraService.listarMesAtual();
@@ -174,6 +177,7 @@ public class GiraController {
     }
 
     @GetMapping("/mes/{mes}")
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<ApiResponse<List<GiraResponse>>> listarPorMes(
             @PathVariable Integer mes) {
 
@@ -192,6 +196,7 @@ public class GiraController {
     }
 
     @PutMapping("/{id}")
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<ApiResponse<GiraResponse>> atualizar(
             @PathVariable Integer id,
             @Valid @RequestBody GiraRequest request) {
@@ -210,6 +215,7 @@ public class GiraController {
     }
 
     @DeleteMapping("/{id}")
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<ApiResponse<Void>> deletar(
             @PathVariable Integer id) {
 
