@@ -83,8 +83,7 @@ public class GlobalExceptionHandler {
                 "Ocorreu um erro interno no servidor",
                 null
         );
-
-        return ResponseEntity
+       return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(response);
     }
@@ -102,6 +101,26 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
+                .body(response);
+    }
+
+
+
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<ApiResponse<Void>> handleIllegalStateException(
+            IllegalStateException exception
+    ) {
+
+        ApiResponse<Void> response =
+                new ApiResponse<>(
+                        false,
+                        HttpStatus.CONFLICT.value(),
+                        exception.getMessage(),
+                        null
+                );
+
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
                 .body(response);
     }
 }
