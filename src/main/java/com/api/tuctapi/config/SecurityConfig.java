@@ -76,6 +76,32 @@ public class SecurityConfig {
                                 "/api/v1/usuarios"
                         ).hasRole("ADMIN")
 
+        //-------- VOTAÇÃO
+                        .requestMatchers(
+                                HttpMethod.GET,
+                                "/api/v1/votacoes/perguntas/**"
+                        ).permitAll()
+
+                        .requestMatchers(
+                                HttpMethod.POST,
+                                "/api/v1/votacoes/perguntas/*/votos"
+                        ).permitAll()
+
+                        .requestMatchers(
+                                HttpMethod.POST,
+                                "/api/v1/votacoes/perguntas/**"
+                        ).hasRole("ADMIN")
+                         .requestMatchers(
+                                 HttpMethod.PUT,
+                                 "/api/v1/votacoes/perguntas/**"
+                         ).hasRole("ADMIN")
+                         .requestMatchers(
+                                 HttpMethod.DELETE,
+                                 "/api/v1/votacoes/perguntas/**"
+                         ).hasRole("ADMIN")
+        //-------- Fim VOTAÇÃO
+
+                    // GIRAS
                         .requestMatchers(
                                 HttpMethod.GET,
                                 "/api/v1/giras/publicas",
